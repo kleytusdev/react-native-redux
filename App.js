@@ -1,27 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
-import UserList from './src/components/UserList';
-import store from './src/store';
-
+// Navigator
+import { NavigationContainer } from '@react-navigation/native';
+import Navigator from './src/navigations/Navigator'
 // Redux
 import { Provider } from 'react-redux'
+import store from './src/store';
 
 export default function App() {
   return (
     <>
       <Provider store={store}>
-        <View style={styles.container}>
-          <UserList />
-        </View>
+        <NavigationContainer>
+          <Navigator />
+        </NavigationContainer>
       </Provider>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

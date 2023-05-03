@@ -3,17 +3,18 @@ import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "rea
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 // Slice
-import { fetchAllUsers } from "../store/slices/users/userSlice";
+import { fetchAllInfo } from '../store/slices/info/infoSlice'
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux'
 
-const UserList = () => {
-  const { list: users } = useSelector((state) => state.users);
+const InfoList = () => {
+
+  const { list: info } = useSelector((state) => state.info);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllUsers());
+    dispatch(fetchAllInfo());
   }, []);
 
   return (
@@ -21,7 +22,7 @@ const UserList = () => {
       <SafeAreaView style={{ flex:1, paddingHorizontal: 20, paddingVertical: 20, backgroundColor: '#121214' }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 5 }}>
-            {users.map((user, index) => (
+            {info.map((info, index) => (
               <TouchableOpacity key={index} style={{ width: '47%', height: 200, marginBottom: 20 }}>
                 <LinearGradient
                   colors={["#857EF1", "#9F61EA", "#DE647D", "#E69673"]}
@@ -37,13 +38,14 @@ const UserList = () => {
                   <View style={{ flex: 1.2, justifyContent: 'center' }}>
                     <Image
                       style={{ borderWidth: 5, borderColor: '#fff', borderRadius: 60, width: '50%', height: '70%', alignSelf: "center" }}
-                      source={{ uri: user.avatar }}
+                      source={{ uri: info.image }}
                     />
 
                   </View>
-                  <View style={{ justifyContent: 'center', flex: 0.5, paddingHorizontal: 10, paddingVertical: 2, backgroundColor: 'white' }}>
-                    <Text style={{ fontSize: 15, fontWeight: '500' }}>{`${user.first_name} ${user.last_name}`}</Text>
-                    <Text style={{ fontSize: 15, fontWeight: '300' }}>{user.email}</Text>
+                  <View style={{ justifyContent: 'center', flex: 0.5, paddingHorizontal: 10, paddingVertical: 5, backgroundColor: 'white' }}>
+                    <Text style={{ fontSize: 15, fontWeight: '500' }}>{info.name}</Text>
+                    <Text style={{ fontSize: 15, fontWeight: '300' }}>{info.status}</Text>
+                    <Text style={{ fontSize: 15, fontWeight: '300' }}>{info.species}</Text>
                   </View>
                 </LinearGradient>
               </TouchableOpacity>
@@ -52,9 +54,9 @@ const UserList = () => {
         </ScrollView>
       </SafeAreaView>
     </>
-  );
-};
+  )
+}
 
-export default UserList;
+export default InfoList
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})
