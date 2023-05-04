@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import InfoList from './../../components/InfoList'
+
 
 const Favorite = () => {
   return (
