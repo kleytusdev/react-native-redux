@@ -22,7 +22,7 @@ const UserList = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 5 }}>
             {users.map((user, index) => (
-              <TouchableOpacity key={index} style={{ width: '47%', height: 200, marginBottom: 20 }}>
+              <TouchableOpacity key={index} style={{ width: '45%', marginBottom: 20 }}>
                 <LinearGradient
                   colors={["#857EF1", "#9F61EA", "#DE647D", "#E69673"]}
                   start={{ x: 0, y: 1 }}
@@ -31,12 +31,11 @@ const UserList = () => {
                     backgroundColor: "#E69673",
                     borderRadius: 20,
                     overflow: "hidden",
-                    height: '100%',
                   }}
                 >
                   <View style={{ flex: 1.2, justifyContent: 'center' }}>
                     <Image
-                      style={{ borderWidth: 5, borderColor: '#fff', borderRadius: 60, width: '50%', height: '70%', alignSelf: "center" }}
+                      style={{ borderWidth: 5, borderColor: '#fff', borderRadius: 60, width: 100, height: 100, alignSelf: "center" }}
                       source={{ uri: user.avatar }}
                     />
 

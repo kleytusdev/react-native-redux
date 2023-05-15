@@ -1,13 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+import { addFavorite } from "../store/slices/favorite/favoriteSlice";
+import { removeFavorite } from "../store/slices/favorite/favoriteSlice";
 // Slice
-import { fetchAllInfo, updateInfo } from '../store/slices/info/infoSlice'
+import { fetchAllInfo } from '../store/slices/info/infoSlice'
 // Redux
 import { useDispatch, useSelector } from 'react-redux'
 
 const InfoList = () => {
+
+  const navigation = useNavigation();
 
   const { list: info } = useSelector((state) => state.info);
 
@@ -18,7 +23,11 @@ const InfoList = () => {
   }, []);
 
   const handleUpdateInfo = (id, name, status, species) => {
-    dispatch(updateInfo({ id, name, status, species }));
+    navigation.navigate('UpdateInfo', { id, name, status, species });
+  };
+
+  const handleAddFavorite = (id, image, name, status, species) => {
+    dispatch(addFavorite({ id, image, name, status, species }));
   };
 
   return (
@@ -27,7 +36,7 @@ const InfoList = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 5 }}>
             {info.map((info, index) => (
-              <TouchableOpacity key={index} style={{ width: '45%', marginBottom: 20 }}>
+              <View key={index} style={{ width: '45%', marginBottom: 20 }}>
                 <LinearGradient
                   colors={["#857EF1", "#9F61EA", "#DE647D", "#E69673"]}
                   start={{ x: 0, y: 1 }}
@@ -49,12 +58,34 @@ const InfoList = () => {
                     <Text style={{ fontSize: 15, fontWeight: '500' }}>{info.name}</Text>
                     <Text style={{ fontSize: 15, fontWeight: '300' }}>{info.status}</Text>
                     <Text style={{ fontSize: 15, fontWeight: '300' }}>{info.species}</Text>
-                    <TouchableOpacity style={{ alignSelf: 'center', backgroundColor: '#EBE7EE', padding: 10, margin: 10, borderRadius: 10 }} onPress={() => handleUpdateInfo(info.id, "NameTest", "StatusTest", "SpeciesTest")}>
-                      <Text style={{ fontSize: 15, fontWeight: '400' }}>Update Info</Text>
-                    </TouchableOpacity>
+                    <View style={{ gap: 10, marginVertical: 10 }} >
+                      <TouchableOpacity 
+                        style={{ alignSelf: 'center', backgroundColor: '#EBE7EE', padding: 10, borderRadius: 10 }}
+                        onPress={() => handleUpdateInfo(info.id, info.name, info.status, info.species)}
+                      >
+                        <Text style={{ fontSize: 15, fontWeight: '400' }}>Update Info</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity 
+                        style={{ alignSelf: 'center', backgroundColor: '#EBE7EE', padding: 10, borderRadius: 10 }}
+                        onPress={() => {
+                          const { id, image, name, status, species } = info;
+                          handleAddFavorite(id, image, name, status, species);
+                        }}
+                      >
+                        <Text style={{ fontSize: 15, fontWeight: '400' }}>Add favorite</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity 
+                        style={{ alignSelf: 'center', backgroundColor: '#EBE7EE', padding: 10, borderRadius: 10 }}
+                        onPress={() => {
+                          dispatch(removeFavorite(info.id)); // agrega esta línea para eliminar el ítem de favoritos
+                        }}
+                      >
+                        <Text style={{ fontSize: 15, fontWeight: '400' }}>Remove favorite</Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </LinearGradient>
-              </TouchableOpacity>
+              </View>
             ))}
           </View>
         </ScrollView>
