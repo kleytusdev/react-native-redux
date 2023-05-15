@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { addFavorite } from "../store/slices/favorite/favoriteSlice";
-import { removeFavorite } from "../store/slices/favorite/favoriteSlice";
+import { addFavorite, removeFavorite } from "../store/slices/favorite/favoriteSlice";
 // Slice
 import { fetchAllInfo } from '../store/slices/info/infoSlice'
 // Redux

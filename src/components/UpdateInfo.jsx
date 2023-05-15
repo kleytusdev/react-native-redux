@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { updateInfo } from '../store/slices/info/infoSlice';
+import { updateFavorite } from '../store/slices/favorite/favoriteSlice';
 import { useRoute } from '@react-navigation/native';
 
 const UpdateInfo = ({ navigation }) => {
-
   const {params} = useRoute();
   const {id, name, status, species} = params;
-
+  
   const [infoName, setInfoName] = useState(name);
   const [infoStatus, setInfoStatus] = useState(status);
   const [infoSpecies, setInfoSpecies] = useState(species);
+  
+  const favorites = useSelector((state) => state.favorites);
 
   const dispatch = useDispatch();
 
-  
   const handleUpdate = () => {
     dispatch(updateInfo({ id, name: infoName, status: infoStatus, species: infoSpecies }));
+    dispatch(updateFavorite({ id, name: infoName, status: infoStatus, species: infoSpecies }));
+  
     navigation.goBack();
   };
 

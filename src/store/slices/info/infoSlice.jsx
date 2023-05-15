@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-// Axios
 import axios from "axios";
 
 export const infoSlice = createSlice({
@@ -14,11 +13,12 @@ export const infoSlice = createSlice({
     updateInfo: (state, action) => {
       const { id, name, status, species } = action.payload;
 
-      const index = state.list.findIndex((info) => info.id === id);
-
-      if (index !== -1) {
-        state.list[index] = { ...state.list[index], name, status, species };
-      }
+      state.list = state.list.map((info) => {
+        if (info.id === id) {
+          return { ...info, name, status, species };
+        }
+        return info;
+      });
     },
   },
 });
